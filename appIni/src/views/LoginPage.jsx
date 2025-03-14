@@ -10,11 +10,32 @@ import {
  } from "firebase/auth";
 
 
+
 function LoginPage() {
 
     const [loginType, setLoginType] = useState('login');
     const [userCredenciais, setUserCredenciais] = useState({})
     const [error , setError] = useState('')
+
+    const dic_erros = {
+        'auth/missing-password': "Informar a senha",
+        'auth/weak-password': "Senha deve ter no mínimo 6 caracteres",
+        'auth/email-already-in-use': "Email já cadastrado",
+        'auth/invalid-email': "E-mail inválido",
+        'auth/operation-not-allowed': "Operação não permitida",
+        'auth/user-not-found': "Usuário não encontrado",
+        'auth/wrong-password': "Senha incorreta",
+        'firestore/permission-denied': "Permissão negada",
+        'firestore/unauthenticated': "Usuário não autenticado",
+        'firestore/not-found': "Documento não encontrado",
+        'firestore/failed-precondition': "Falha na pré-condição",
+        'storage/unauthorized': "Não autorizado",
+        'storage/canceled': "Operação cancelada",
+        'functions/invalid-argument': "Argumento inválido",
+        'functions/failed-precondition': "Falha na pré-condição",
+        'app/duplicate-app': "Aplicativo duplicado",
+        'auth/invalid-credential': "Credencial invalida"
+    }
 
     function handleCred(e){
         setUserCredenciais({...userCredenciais, [e.target.name]: e.target.value})
@@ -36,7 +57,7 @@ function LoginPage() {
             const errorCode = error.code;
             const errorMessage = error.message;
 
-            setError( errorMessage)
+            setError(dic_erros[errorCode] || errorMessage)
             // ..
         }); 
     }
@@ -58,7 +79,7 @@ function LoginPage() {
             console.log(errorCode)
             console.log(errorMessage)
 
-            setError( errorMessage)
+            setError(dic_erros[errorCode] || errorMessage)
 
             // ..
         }); 

@@ -1,35 +1,113 @@
+/* Estilização do Header */
 .header {
-    background-color: #3db097;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
+  background-color: #3db097;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Navegação */
+.header-nav {
+  display: flex;
+  gap: 10px;
+}
+
+/* Botões da navegação */
+.header-nav button {
+  padding: 8px 12px;
+  font-size: 1em;
+  border: none;
+  background: white;
+  color: #3db097;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border-radius: 5px;
+}
+
+.header-nav button:hover {
+  background: #2a8572;
+  color: white;
+}
+
+/* Área do usuário */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Foto do usuário */
+.header-user img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Ícones */
+.header-user i {
+  font-size: 1.2em;
+  color: white;
+}
+
+/* Botão do usuário */
+.header-user button {
+  padding: 8px 12px;
+  font-size: 1em;
+  background: white;
+  color: #3db097;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border-radius: 5px;
+}
+
+.header-user button:hover {
+  background: #2a8572;
+  color: white;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
     align-items: center;
+    text-align: center;
   }
-  
+
   .header-nav {
-    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
   }
-  
-  .header-nav button {
-    margin-right: 5px; /* Adicione margem entre os botões */
-  }
-  
+
   .header-user {
-    display: flex;
+    flex-direction: column;
     align-items: center;
   }
-  
+
+  .header-user img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 8px;
+  }
+
   .header-user img {
     width: 30px;
     height: 30px;
-    border-radius: 50%;
-    margin-right: 6px;
   }
-  
-  .header-user i {
-    margin-right: 10px;
-  }
-  
+
+  .header-nav button,
   .header-user button {
-    margin-left: 10px;
+    font-size: 0.9em;
+    padding: 6px 10px;
   }
+}

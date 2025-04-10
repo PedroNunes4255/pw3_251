@@ -1,19 +1,19 @@
-// UserProfileForm.jsx
 import { useState, useEffect } from 'react';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase/config';
-import './UserProfilePage.css'; // Importe o arquivo CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UserProfileForm = () => {
-  const pageTitle = "Perfil usuário ";
+  const pageTitle = "Perfil Usuário";
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: '',
     photo: '',
-    birthDate: ''
+    birthDate: '',
+    telefone: ''
   });
 
   const [loading, setLoading] = useState(true);
@@ -31,13 +31,13 @@ const UserProfileForm = () => {
         }
         setLoading(false);
       } catch (err) {
-        setError('Erro ao carregar dados do usuário', err);
+        setError('Erro ao carregar dados do usuário');
         setLoading(false);
       }
     };
 
     loadUserData();
-  }, [auth.currentUser, db]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,36 +73,50 @@ const UserProfileForm = () => {
   };
 
   if (loading) {
-    return <div className="text-center">Carregando...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <>
-      <div className="user-profile-container">
-        <Header pageTitle={pageTitle} />
-        <h2 className="text-2xl font-bold mb-6">Complete seu Perfil</h2>
+    <div className="container mt-5">
+      <Header pageTitle={pageTitle} />
+      <div className="card p-4 shadow-sm">
+        <h2 className="text-center mb-4">Complete seu Perfil</h2>
 
-        {error && <div className="user-profile-error">{error}</div>}
+        {error && <div className="alert alert-danger">{error}</div>}
+        {success && <div className="alert alert-success">Dados salvos com sucesso!</div>}
 
-        {success && <div className="user-profile-success">Dados salvos com sucesso!</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Nome Completo</label>
+            <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} className="form-control" required />
+          </div>
 
-        <form onSubmit={handleSubmit} className="user-profile-form">
-          <label>Nome Completo</label>
-          <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required />
+          <div className="mb-3">
+            <label className="form-label">Foto URL</label>
+            <input type="text" name="photo" value={formData.photo} onChange={handleChange} className="form-control" required />
+          </div>
 
-          <label>Foto URL</label>
-          <input type="text" name="photo" value={formData.photo} onChange={handleChange} required />
+          <div className="mb-3">
+            <label className="form-label">Data de Nascimento</label>
+            <input type="date" name="birthDate" value={formData.birthDate} onChange={handleChange} className="form-control" />
+          </div>
 
-          <label>Data de Nascimento</label>
-          <input type="date" name="birthDate" value={formData.birthDate} onChange={handleChange} />
+          <div className="mb-3">
+            <label className="form-label">Telefone</label>
+            <input type="number" name="telefone" value={formData.telefone} onChange={handleChange} className="form-control" />
+          </div>
 
-          <button type="submit">Salvar Dados</button>
+          <button type="submit" className="btn btn-primary w-100">Salvar Dados</button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
 export default UserProfileForm;
-
-
